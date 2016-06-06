@@ -44,7 +44,7 @@ var (
 func main() {
 	flag.Parse()
 
-	http.HandleFunc("/api/", func(w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc(todow.APIPath, func(w http.ResponseWriter, r *http.Request) {
 		switch r.Method {
 		case "GET":
 			authMiddleware(allItems)(w, r)
@@ -72,7 +72,13 @@ func main() {
 			return
 		}
 
-		if err := tmpl.Execute(w, struct{ Items []*todow.Item }{col}); err != nil {
+		if err := tmpl.Execute(w, struct {
+			Items   []*todow.Item
+			APIPath string
+		}{
+			col,
+			todow.APIPath,
+		}); err != nil {
 			log.Println(err)
 		}
 	}))
@@ -375,7 +381,7 @@ var tmpl = template.Must(template.New("").Parse(`
 	</table>
 
 	<h2>Add</h2>
-	<form action="/api/" method="POST">
+	<form action="{{$.APIPath}}" method="POST">
 		<input type="text" name="body" placeholder="Body">
 		<button>Submit</button>
 	</form>
