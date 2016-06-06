@@ -178,8 +178,8 @@ func printErrLn(f string, args ...interface{}) {
 var help = `todow [COMMAND] [ARGUMENTS]...
 
 Flags:
-	-domain
-		Domain of the todow server
+	-h
+		Todow hostname
 
 
 Commands:
