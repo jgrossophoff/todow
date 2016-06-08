@@ -51,11 +51,11 @@ func main() {
 }
 
 func addItem() {
-	if len(os.Args) == 2 {
+	if len(flag.Args()) == 1 {
 		printErrLn("Missing item text")
 	}
 	item := &todow.Item{
-		Body:    strings.Join(os.Args[2:], " "),
+		Body:    strings.Join(flag.Args()[1:], " "),
 		Created: time.Now(),
 	}
 
@@ -78,11 +78,11 @@ func addItem() {
 }
 
 func removeItem() {
-	if len(os.Args) == 2 {
+	if len(flag.Args()) == 1 {
 		printErrLn("Missing item id")
 	}
 
-	id := os.Args[2]
+	id := flag.Args()[1]
 
 	req := request("DELETE")
 	req.URL.Path += id
@@ -99,11 +99,11 @@ func removeItem() {
 }
 
 func completeItem() {
-	if len(os.Args) == 2 {
+	if len(flag.Args()) == 1 {
 		printErrLn("Missing item id")
 	}
 
-	id := os.Args[2]
+	id := flag.Args()[1]
 
 	req := request("PATCH")
 	req.URL.Path += id
